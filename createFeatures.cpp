@@ -8,12 +8,13 @@
 
 using namespace std;
 
-vector<string> FeatchName = {"name", "type", "tata", "ans"};
+vector<string> FeatchName = {"name", "type", "tata", "CA", "ans"};
 vector<string> chrName;
 vector<int> type;
 vector<int> pos;
 vector<int> ans;
 vector<int> tataDist;
+vector<int> CA;
 vector<string> seq;
 
 ofstream fout("features.csv");
@@ -32,6 +33,7 @@ void printCSV() {
         fout << "\"" << chrName[i] << "_" << pos[i] << "\",";
         fout << "\"" << type[i] << "\",";
         fout << "\"" << tataDist[i] << "\",";
+        fout << "\"" << CA[i] << "\",";
         fout << "\"" << ans[i] << "\"\n";
     }
 }
@@ -92,7 +94,9 @@ int findTATAForOne(string& sq, int pos) {
 void findTATA() {
     for (int i = 0; i < (int)seq.size(); ++i) {
         for (int j = 0; j < geneLen; ++j) {
-            tataDist.push_back(findTATAForOne(seq[0], j));
+            tataDist.push_back(findTATAForOne(seq[i], j));
+            if (j != 0 && seq[i][j] == 'a' && seq[i][j - 1] == 'c') CA.push_back(1);
+            else CA.push_back(0);
         }
     }
 }
